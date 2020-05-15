@@ -35,17 +35,17 @@ app = Flask(__name__)
 
 
 # Get data from DB
-lastDate = (session.query(Measurement.date)
+latestDate = (session.query(Measurement.date)
                 .order_by(Measurement.date.desc())
                 .first())
-lastDate = list(np.ravel(lastDate))[0]
+latestDate = list(np.ravel(latestDate))[0]
 
-lastDate = dt.datetime.strptime(lastDate, '%Y-%m-%d')
-lastYear = int(dt.datetime.strftime(lastDate, '%Y'))
-lastMonth = int(dt.datetime.strftime(lastDate, '%m'))
-lastDay = int(dt.datetime.strftime(lastDate, '%d'))
+latestDate = dt.datetime.strptime(latestDate, '%Y-%m-%d')
+latestYear = int(dt.datetime.strftime(latestDate, '%Y'))
+latestMonth = int(dt.datetime.strftime(latestDate, '%m'))
+latestDay = int(dt.datetime.strftime(latestDate, '%d'))
 
-yearBefore = dt.date(lastYear, lastMonth, lastDay) - dt.timedelta(days=365)
+yearBefore = dt.date(latestYear, latestMonth, latestDay) - dt.timedelta(days=365)
 yearBefore = dt.datetime.strftime(yearBefore, '%Y-%m-%d')
 
 
@@ -58,9 +58,9 @@ def home():
 		"""List all available api routes."""
 		return (
     		f"Available Routes:<br/>"
-    		f"/api/v1.0/precipitaton -- the last year of preceipitation data<br/>"
+    		f"/api/v1.0/precipitaton -- the latest year of preceipitation data<br/>"
     		f"/api/v1.0/stations ------- a list of all weather observation stations<br/>"
-    		f"/api/v1.0/tobs ----------- the last year of temperature data<br/><br/>"
+    		f"/api/v1.0/tobs ----------- the latest year of temperature data<br/><br/>"
     		f"searchdate (yyyy-mm-dd):<br/>"
     		f"/api/v1.0/searchdate/2017-02-28  ----------------- min, avg, max temperature for given start<br/>"
     		f"/api/v1.0/searchdate/2017-02-28/2017-03-05 -- min, avg, max temperature for given start-end<br/>"
